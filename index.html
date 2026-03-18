@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sketchfab Viewer API example</title>
+
+    <!-- Insert the Sketchfab viewer script -->
+    <script type="text/javascript" src="https://static.sketchfab.com/api/sketchfab-viewer-1.12.1.js"></script>
+
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        iframe {
+            border: none;
+            height: 100vh;
+            width: 100vw;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Insert an empty iframe with attributes -->
+    <iframe src="" id="api-frame" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+
+    <!-- Initialize the viewer -->
+    <script type="text/javascript">
+        const iframe = document.getElementById( 'api-frame' );
+        const uid = '0a7f3c728d6644b3979146e950f4c970'; // Replace with the ID of your model.
+        const client = new Sketchfab( iframe );
+        let sketchfabApi;
+        client.init( uid, {
+            success: function onSuccess( api ){
+                sketchfabApi = api;
+                api.start();
+                api.addEventListener( 'viewerready', function() {
+
+                    console.log( 'Viewer is ready' );
+
+                } );
+            },
+            error: function onError() {
+                console.log( 'Viewer error' );
+            }
+        } );
+    </script>
+</body>
+</html>
+
